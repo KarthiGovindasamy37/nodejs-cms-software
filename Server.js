@@ -96,7 +96,7 @@ app.post("/login",async(req,res)=>{
                 
                 let token=jwt.sign({_id:user._id},SECRETKEY,{expiresIn:"8h"})
 
-                res.json({token})
+                res.json({token,user})
             }else{
                 res.status(401).json({message:"Email id or password is incorrect"})  
             }
