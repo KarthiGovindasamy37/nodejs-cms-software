@@ -82,7 +82,7 @@ app.post("/register",async(req,res)=>{
 
 app.post("/login",async(req,res)=>{
     try {
-        console.log("comess");
+    
         let connection=await mongoclient.connect(URL);
 
         let db=connection.db(DB);
