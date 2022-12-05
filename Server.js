@@ -82,7 +82,7 @@ app.post("/register",async(req,res)=>{
 
 app.post("/login",async(req,res)=>{
     try {
-        
+        console.log("comess");
         let connection=await mongoclient.connect(URL);
 
         let db=connection.db(DB);
@@ -95,8 +95,12 @@ app.post("/login",async(req,res)=>{
             if(compare){
                 
                 let token=jwt.sign({_id:user._id},SECRETKEY,{expiresIn:"8h"})
-
-                res.json({token,user})
+            let {name,email}=user
+            let userDetail={
+                name,
+                email
+            }
+                res.json({token,userDetail})
             }else{
                 res.status(401).json({message:"Email id or password is incorrect"})  
             }
