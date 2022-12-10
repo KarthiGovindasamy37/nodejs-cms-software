@@ -44,7 +44,7 @@ app.use(cors({
                 from:USER,
                 to:mail,
                 subject:"Temporary password from MySite.com",
-                html:`<h1>Your temporary password is -${temp}</h1>
+                html:`<h1>Your temporary password is ${temp}</h1>
                       <h3>Copy the above password and use it by clicking the temporary password link in the forgot password page</h3>`
             });
             res.json({message:`mail sent to ${mail}`})
@@ -141,6 +141,7 @@ app.post("/forgot",async(req,res)=>{
 })
 
 app.post("/temppassword",async(req,res)=>{
+    
     try {
         let connection=await mongoclient.connect(URL);
 
