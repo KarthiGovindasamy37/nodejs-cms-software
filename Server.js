@@ -205,7 +205,7 @@ app.post("/razorpaypayment",async(req,res)=>{
         };
 
         let order=await instance.orders.create(options)
-        console.log(order)
+        
         res.json({
             id:order.id,
             currency:order.currency,
@@ -216,4 +216,4 @@ app.post("/razorpaypayment",async(req,res)=>{
     }
 })
 
-app.listen(process.env.PORT || 3001)
+app.listen(process.env.PORT || 3001);
