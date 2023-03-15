@@ -51,6 +51,20 @@ app.use(cors());
         }
     }
 
+let Authorization = (req,res,next) =>{ 
+    try {
+        if(req.headers.authorization){
+            let decode = jwt.verify(req.headers.authorization,SECRETKEY)
+            next()
+        }else{
+            res.status(401).json({message:"Please login your account"})
+        }
+    } catch (error) {
+        res.status(440).json({message:"Session expired please login again"})
+    }
+}
+
+
 app.post("/register",async(req,res)=>{
     try {
         let connection=await mongoclient.connect(URL);
@@ -92,7 +106,7 @@ app.post("/login",async(req,res)=>{
 
             if(compare){
                 
-                let token=jwt.sign({_id:user._id},SECRETKEY,{expiresIn:"8h"})
+                let token=jwt.sign({_id:user._id},SECRETKEY,{expiresIn:"2m"})
             let {name,email}=user
             let userDetail={
                 name,
@@ -191,7 +205,7 @@ app.post("/passwordchange",async(req,res)=>{
     }
 });
 
-app.post("/razorpaypayment",async(req,res)=>{
+app.post("/razorpaypayment",Authorization,async(req,res)=>{
     try {
         let amount=req.body.price * 100;
         let currency="INR";
@@ -214,4 +228,7 @@ app.post("/razorpaypayment",async(req,res)=>{
     }
 })
 
+app.post("/authorize",Authorization,(req,res)=>{
+    res.json({message:"Proceed"})
+})
 app.listen(process.env.PORT || 3001);
