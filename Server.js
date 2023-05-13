@@ -24,7 +24,9 @@ key_secret:RAZORPAY_SECRET
 });
 
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+    origin : "https://delightful-chaja-15b83a.netlify.app"
+}));
 
     let forgotMail=async(res,temp,mail)=>{
         try {
